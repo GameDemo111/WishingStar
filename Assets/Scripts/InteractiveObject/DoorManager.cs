@@ -1,8 +1,7 @@
 using UnityEngine;
 
-public class DoorController : MonoBehaviour
+public class DoorManager : MonoBehaviour
 {
-    // 定义门的三种状态
     public enum DoorState
     {
         Normal,
