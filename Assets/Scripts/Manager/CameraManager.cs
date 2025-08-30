@@ -3,16 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraManager : MonoBehaviour
-{   public Camera playerCamera;
-    public Camera globalCamera;
+{
+    public GameObject playerCameraObject;
+    public GameObject globalCameraObject;
     public GameObject gridManager;
+    private Camera playerCamera;
+    private Camera globalCamera;
+    public bool isGlobalView = false;
 
-    private bool isGlobalView = false;
 
     void Start()
     {
-        playerCamera.enabled = true;
-        globalCamera.enabled = false;
+        playerCamera = playerCameraObject.GetComponent<Camera>();
+        globalCamera = globalCameraObject.GetComponent<Camera>();
+        playerCameraObject.SetActive(true);
+        globalCameraObject.SetActive(false);
 
         if (gridManager != null)
         {
@@ -33,8 +38,8 @@ public class CameraManager : MonoBehaviour
     {
         if (isGlobalView)
         {
-            playerCamera.enabled = false;
-            globalCamera.enabled = true;
+            playerCameraObject.SetActive(false);
+            globalCameraObject.SetActive(true);
             if (gridManager != null)
             {
                 gridManager.SetActive(true);
@@ -42,8 +47,8 @@ public class CameraManager : MonoBehaviour
         }
         else
         {
-            playerCamera.enabled = true;
-            globalCamera.enabled = false;
+            playerCameraObject.SetActive(true);
+            globalCameraObject.SetActive(false);
             if (gridManager != null)
             {
                 gridManager.SetActive(false);
