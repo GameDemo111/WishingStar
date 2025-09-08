@@ -1628,6 +1628,7 @@ MonoBehaviour:
   coyoteTime: 0.15
   groundBoxSize: {x: 1, y: 0.25}
   groundBoxOffset: {x: 0, y: -0.25}
+  cameraManager: {fileID: 2141569748}
 --- !u!61 &1301355260
 BoxCollider2D:
   m_ObjectHideFlags: 0

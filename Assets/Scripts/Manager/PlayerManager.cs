@@ -23,6 +23,7 @@ public class PlayerManager : MonoBehaviour
     public Vector2 groundBoxOffset;
 
     [Header("状态")]
+    public CameraManager cameraManager;
 
     private Vector2 moveInput;
     private Rigidbody2D rb2D;
@@ -38,35 +39,39 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
-        moveInput.x = Input.GetAxisRaw("Horizontal");
-        moveInput.y = Input.GetAxisRaw("Vertical");
+        if (!cameraManager.isGlobalView)
+        {
+            moveInput.x = Input.GetAxisRaw("Horizontal");
+            moveInput.y = Input.GetAxisRaw("Vertical");
 
-        if (moveInput.x < 0)
-        {
-            transform.localScale = new Vector3(-1, 1, 1);
-        }
-        else if (moveInput.x > 0)
-        {
-            transform.localScale = new Vector3(1, 1, 1);
-        }
-
-        if (CheckGround())
-        {
-
-        }
-        else
-        {
-            coyoteTimer -= Time.deltaTime;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (CheckGround() || coyoteTimer > 0)
+            if (moveInput.x < 0)
             {
-                Jump();
-                coyoteTimer = 0;
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
+            else if (moveInput.x > 0)
+            {
+                transform.localScale = new Vector3(1, 1, 1);
+            }
+
+            if (CheckGround())
+            {
+
+            }
+            else
+            {
+                coyoteTimer -= Time.deltaTime;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (CheckGround() || coyoteTimer > 0)
+                {
+                    Jump();
+                    coyoteTimer = 0;
+                }
             }
         }
+        
     }
 
     private void FixedUpdate()

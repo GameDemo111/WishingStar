@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CursorManager : MonoBehaviour
@@ -98,11 +99,17 @@ public class CursorManager : MonoBehaviour
     #region 交换位置
     private void SwapPositions(GameObject a, GameObject b)
     {
-        Vector3 temp = a.transform.position;
-        a.transform.position = b.transform.position;
-        b.transform.position = temp;
-        a.GetComponent<SpriteRenderer>().color = new Color( 1, 1, 1, 0.3f);
-        b.GetComponent<SpriteRenderer>().color = new Color( 1, 1, 1, 0.3f);
+        //如果a和b的子物体没有Player
+        if (a.GetComponentInChildren<PlayerManager>() == null && b.GetComponentInChildren<PlayerManager>() == null)
+        {
+            Vector3 temp = a.transform.position;
+            a.transform.position = b.transform.position;
+            b.transform.position = temp;
+            a.GetComponent<SpriteRenderer>().color = new Color( 1, 1, 1, 0.3f);
+            b.GetComponent<SpriteRenderer>().color = new Color( 1, 1, 1, 0.3f);
+        }
+        
+        
     }
 
     #endregion
