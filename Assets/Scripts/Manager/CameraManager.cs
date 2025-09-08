@@ -27,7 +27,7 @@ public class CameraManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             isGlobalView = !isGlobalView;
             SwitchCamera();

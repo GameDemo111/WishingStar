@@ -27,7 +27,7 @@ public class CursorManager : MonoBehaviour
             Debug.LogError("场景里找不到 Tag 为 MainCamera 的摄像机！");
             return;
         }
-        Debug.Log($"鼠标世界坐标：{mouseWorldPos}  碰撞体：{(hit == null ? "无" : hit.name)}");
+        // Debug.Log($"鼠标世界坐标：{mouseWorldPos}  碰撞体：{(hit == null ? "无" : hit.name)}");
 
         if (cameraManager.isGlobalView)
         {

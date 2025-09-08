@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Win : MonoBehaviour
@@ -20,7 +21,15 @@ public class Win : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("You Win!");
+            if (gameObject.GetComponent<DoorManager>().currentState == DoorManager.DoorState.Normal)
+            {
+                Debug.Log("门关闭!");
+            }
+            else if (gameObject.GetComponent<DoorManager>().currentState == DoorManager.DoorState.happy)
+            {
+                Debug.Log("门开了! 你赢了");
+            }
+            
         }
     }
 }

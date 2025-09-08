@@ -31,10 +31,10 @@ public class PlaneManager : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
         originalPosition = transform.position;
-        if (currentState == PlaneState.happy)
-        {
-            StartCoroutine(MovePlane());
-        }
+        // if (currentState == PlaneState.happy)
+        // {
+        //     StartCoroutine(MovePlane());
+        // }
         UpdatePlaneState();
     }
     void Update()
@@ -45,11 +45,12 @@ public class PlaneManager : MonoBehaviour
         }
         else if (currentState == PlaneState.happy && isMoving)
         {
-            FallPlatform();
+            return;
         }
         else if (currentState == PlaneState.sad && isFalling)
         {
             FallPlatform();
+            return;
         }
         else if (currentState == PlaneState.anger)
         {
@@ -94,18 +95,18 @@ public class PlaneManager : MonoBehaviour
         currentState = newState;
         UpdatePlaneState();
     }
-    private IEnumerator MovePlane()
-    {
-        while (true)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, waypoints[currentWaypointIndex], moveSpeed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, waypoints[currentWaypointIndex]) < 0.1f)
-            {
-                currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
-            }
-            yield return null;
-        }
-    }
+    // private IEnumerator MovePlane()
+    // {
+    //     while (true)
+    //     {
+    //         transform.position = Vector3.MoveTowards(transform.position, waypoints[currentWaypointIndex], moveSpeed * Time.deltaTime);
+    //         if (Vector3.Distance(transform.position, waypoints[currentWaypointIndex]) < 0.1f)
+    //         {
+    //             currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
+    //         }
+    //         yield return null;
+    //     }
+    // }
     public void ResetPos()
     {
         transform.position = originalPosition;

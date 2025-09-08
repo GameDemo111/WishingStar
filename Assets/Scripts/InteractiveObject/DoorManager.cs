@@ -38,10 +38,13 @@ public class DoorManager : MonoBehaviour
     }
     private void HandleNormalState()
     {
+        gameObject.GetComponent<SpriteRenderer>().color = Color.red;
     }
 
     private void HandlehappyState()
     {
+        gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+        Debug.Log("门已打开");
     }
 
     private void HandlesadState()
@@ -122,5 +125,30 @@ public class DoorManager : MonoBehaviour
     {
         isopen = false;
         //动画接口
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        PlaneManager planeManager = collision.GetComponent<PlaneManager>();
+        if (planeManager != null)
+        {
+            if (planeManager.currentState == PlaneManager.PlaneState.happy)
+            {
+                SetDoorState(DoorState.happy);
+            }
+            else if (planeManager.currentState == PlaneManager.PlaneState.sad)
+            {
+                SetDoorState(DoorState.sad);
+            }
+            else if (planeManager.currentState == PlaneManager.PlaneState.anger)
+            {
+                SetDoorState(DoorState.anger);
+            }
+            else
+            {
+                SetDoorState(DoorState.Normal);
+            }
+        }
+        
     }
 }
