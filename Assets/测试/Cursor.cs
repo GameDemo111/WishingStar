@@ -5,7 +5,7 @@ using UnityEngine;
 public class Cursor : MonoBehaviour
 {
     private Vector3 mouseWorldPos => Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
-    private bool isSelecting = false;
+    private bool isSelecting;
     private GameObject selectedObject = null;
     
     

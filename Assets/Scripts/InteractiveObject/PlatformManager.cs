@@ -4,15 +4,7 @@ using UnityEngine;
 
 public class PlatformManager : MonoBehaviour
 {
-    public enum PlatformState
-    {
-        Normal,
-        happy,
-        sad,
-        anger
-    }
-
-    public PlatformState currentState;
+    public Emotion currentState;
     private Vector3 originalPosition;
     private int currentWaypointIndex = 0;
     public Vector3[] waypoints;
@@ -28,16 +20,16 @@ public class PlatformManager : MonoBehaviour
     {
         switch (currentState)
         {
-            case PlatformState.Normal:
+            case Emotion.Normal:
                 HandleNormalState();
                 break;
-            case PlatformState.happy:
+            case Emotion.happy:
                 HandlehappyState();
                 break;
-            case PlatformState.sad:
+            case Emotion.sad:
                 HandlesadState();
                 break;
-            case PlatformState.anger:
+            case Emotion.anger:
                 HandleangerState();
                 break;
         }
@@ -72,7 +64,7 @@ public class PlatformManager : MonoBehaviour
     }
     
     
-    public void SetDoorState(PlatformState newState)
+    public void SetDoorState(Emotion newState)
     {
         if (currentState == newState) return;
         currentState = newState;
@@ -83,21 +75,21 @@ public class PlatformManager : MonoBehaviour
         PlaneManager planeManager = collision.GetComponent<PlaneManager>();
         if (planeManager != null)
         {
-            if (planeManager.currentState == PlaneManager.PlaneState.happy)
+            if (planeManager.currentState == PlaneManager.Emotion.happy)
             {
-                SetDoorState(PlatformState.happy);
+                SetDoorState(Emotion.happy);
             }
-            else if (planeManager.currentState == PlaneManager.PlaneState.sad)
+            else if (planeManager.currentState == PlaneManager.Emotion.sad)
             {
-                SetDoorState(PlatformState.sad);
+                SetDoorState(Emotion.sad);
             }
-            else if (planeManager.currentState == PlaneManager.PlaneState.anger)
+            else if (planeManager.currentState == PlaneManager.Emotion.anger)
             {
-                SetDoorState(PlatformState.anger);
+                SetDoorState(Emotion.anger);
             }
             else
             {
-                SetDoorState(PlatformState.Normal);
+                SetDoorState(Emotion.Normal);
             }
         }
 
