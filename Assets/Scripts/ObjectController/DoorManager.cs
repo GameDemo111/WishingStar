@@ -48,7 +48,7 @@ public class DoorManager : MonoBehaviour
     private void HandleAngerState()
     {
     }
-    public void SetDoorState(Emotion newState)
+    public void SetState(Emotion newState)
     {
         if (currentState == newState) return;
         currentState = newState;
@@ -135,19 +135,19 @@ public class DoorManager : MonoBehaviour
         {
             if (emotionZone.currentState == Emotion.happy)
             {
-                SetDoorState(Emotion.happy);
+                SetState(Emotion.happy);
             }
             else if (emotionZone.currentState == Emotion.sad)
             {
-                SetDoorState(Emotion.sad);
+                SetState(Emotion.sad);
             }
             else if (emotionZone.currentState == Emotion.anger)
             {
-                SetDoorState(Emotion.anger);
+                SetState(Emotion.anger);
             }
             else
             {
-                SetDoorState(Emotion.Normal);
+                SetState(Emotion.Normal);
             }
         }
 
@@ -155,7 +155,7 @@ public class DoorManager : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        SetDoorState(Emotion.Normal);
+        SetState(Emotion.Normal);
     }
     public void ChangeDoor()
     {

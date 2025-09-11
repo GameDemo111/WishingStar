@@ -94,7 +94,7 @@ public class PlaneManager : MonoBehaviour
             Instantiate(thorn, transform.position + spawnOffset, transform.rotation);
         }
     }
-    public void SetPlaneState(Emotion newState)
+    public void SetState(Emotion newState)
     {
         if (currentState == newState) return;
         currentState = newState;
