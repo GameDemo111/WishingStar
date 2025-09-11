@@ -1,11 +1,13 @@
 using UnityEngine;
-
+using System.Collections;
 public class DoorManager : MonoBehaviour
 {
     public Emotion currentState;
     private Animator doorAnimator;
-    private bool isOpen;
+    public bool isOpen;
     private bool canOpen;
+    private Coroutine closeCoroutine;
+    public float delay = 2f;
     private void Start()
     {
         isOpen = false;
@@ -33,19 +35,14 @@ public class DoorManager : MonoBehaviour
     }
     private void HandleNormalState()
     {
-        canOpen = true;
-        SetInactive();
     }
 
     private void HandleHappyState()
     {
-        canOpen = true;
-        SetActive();
     }
 
     private void HandleSadState()
     {
-        canOpen = false;
     }
     private void HandleAngerState()
     {
@@ -56,35 +53,37 @@ public class DoorManager : MonoBehaviour
         currentState = newState;
         UpdateDoorState();
     }
-    // public void TryOpenDoor()
-    // {
-    //     if (currentState == DoorState.Normal)
-    //     {
-    //         if (isopen != true)
-    //         {
-    //             OpenDoor();
-    //         }
-    //     }
-    //     if (currentState == DoorState.happy)
-    //     {
-    //         if (isopen != true)
-    //         {
-    //             OpenDoor();
-    //         }
-    //     }
-    //     if (currentState == DoorState.sad)
-    //     {
-    //         return;
-    //     }
-    //     if (currentState == DoorState.anger)
-    //     {
-    //         if (isopen != true)
-    //         {
-    //             OpenDoor();
-    //         }
-    //     }
-    // }
-    public void SetActive()
+    public void TryOpen()
+    {
+        if (currentState == Emotion.Normal)
+        {
+            if (isOpen != true)
+            {
+                OpenDoor();
+            }
+        }
+        if (currentState == Emotion.happy)
+        {
+            if (isOpen != true)
+            {
+                OpenDoor();
+            }
+        }
+        if (currentState == Emotion.sad)
+        {
+            return;
+        }
+        if (currentState == Emotion.anger)
+        {
+            return;
+        }
+    }
+    private IEnumerator DelayedClose()
+    {
+        yield return new WaitForSeconds(delay);
+        CloseDoor();
+    }
+    public void OpenDoor()
     {
         if (canOpen)
         {
@@ -93,39 +92,36 @@ public class DoorManager : MonoBehaviour
             Debug.Log("门已打开");
             //动画接口
         }
-        
-        
+
+
     }
 
-    // public void TryCloseDoor()
-    // {
-    //     if (currentState == DoorState.Normal)
-    //     {
-    //         if (isopen != false)
-    //         {
-    //             CloseDoor();
-    //         }
-    //     }
-    //     if (currentState == DoorState.happy)
-    //     {
-    //         return;
-    //     }
-    //     if (currentState == DoorState.sad)
-    //     {
-    //         if (isopen != false)
-    //         {
-    //             CloseDoor();
-    //         }
-    //     }
-    //     if (currentState == DoorState.anger)
-    //     {
-    //         if (isopen != false)
-    //         {
-    //             CloseDoor();
-    //         }
-    //     }
-    // }
-    public void SetInactive()
+    public void TryClose()
+    {
+        if (currentState == Emotion.Normal)
+        {
+            if (isOpen != false)
+            {
+                CloseDoor();
+            }
+        }
+        if (currentState == Emotion.happy)
+        {
+            return;
+        }
+        if (currentState == Emotion.sad)
+        {
+            if (isOpen != false)
+            {
+                CloseDoor();
+            }
+        }
+        if (currentState == Emotion.anger)
+        {
+            return;
+        }
+    }
+    public void CloseDoor()
     {
         isOpen = false;
         gameObject.GetComponent<SpriteRenderer>().color = Color.red;
@@ -160,5 +156,13 @@ public class DoorManager : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         SetDoorState(Emotion.Normal);
+    }
+    public void ChangeDoor()
+    {
+        if (isOpen)
+        {
+            TryClose();
+        }
+        else TryOpen();
     }
 }
