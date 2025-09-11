@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -17,7 +18,9 @@ public class PlayerManager : MonoBehaviour
     [Header("跳跃相关")]
     public float jumpForce;
     public float coyoteTime;//土狼时间
-
+    [Header("攀爬相关")]
+    public float climbSpeed = 0.5f;
+    private bool canClimb;
     [Header("地面检测箱参数")]
     public Vector2 groundBoxSize;
     public Vector2 groundBoxOffset;
@@ -52,6 +55,8 @@ public class PlayerManager : MonoBehaviour
             {
                 transform.localScale = new Vector3(1, 1, 1);
             }
+            Run();
+
 
             if (CheckGround())
             {
@@ -70,14 +75,15 @@ public class PlayerManager : MonoBehaviour
                     coyoteTimer = 0;
                 }
             }
+
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                Climb();
+            }
         }
-        
+
     }
 
-    private void FixedUpdate()
-    {
-        Run();
-    }
 
     #region 移动
     private void Run()
@@ -118,6 +124,19 @@ public class PlayerManager : MonoBehaviour
         rb2D.velocity += Vector2.up * jumpForce;
     }
 
+    #endregion
+    #region 攀爬
+    public void Climb()
+    {
+        if (canClimb)
+        {
+            rb2D.gravityScale = 0;
+            rb2D.velocity = new Vector2(rb2D.velocity.x, 0);
+            rb2D.AddForce(Vector2.up * climbSpeed, ForceMode2D.Force);
+        }
+        
+        
+    }
     #endregion
     #region 地面检测
     public bool CheckGround()

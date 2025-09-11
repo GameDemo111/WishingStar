@@ -34,13 +34,13 @@ public class DoorManager : MonoBehaviour
     private void HandleNormalState()
     {
         canOpen = true;
-        CloseDoor();
+        SetInactive();
     }
 
     private void HandleHappyState()
     {
         canOpen = true;
-        OpenDoor();
+        SetActive();
     }
 
     private void HandleSadState()
@@ -84,7 +84,7 @@ public class DoorManager : MonoBehaviour
     //         }
     //     }
     // }
-    private void OpenDoor()
+    public void SetActive()
     {
         if (canOpen)
         {
@@ -125,7 +125,7 @@ public class DoorManager : MonoBehaviour
     //         }
     //     }
     // }
-    private void CloseDoor()
+    public void SetInactive()
     {
         isOpen = false;
         gameObject.GetComponent<SpriteRenderer>().color = Color.red;
