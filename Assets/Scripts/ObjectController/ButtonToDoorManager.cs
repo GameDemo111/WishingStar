@@ -12,6 +12,7 @@ public class ButtonToDoorController : MonoBehaviour
 
     public bool _isOpen= false;
     public bool isOpen
+
     {
         get { return _isOpen; }
         set
@@ -79,7 +80,7 @@ public class ButtonToDoorController : MonoBehaviour
                 }
             }
         }
-        if (targetObject != null && targetObject.currentState == Emotion.Normal)
+        if (targetObject != null)
         {
             switch (currentState)
             {

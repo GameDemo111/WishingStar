@@ -1,17 +1,16 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
 public class DoorManager : MonoBehaviour
 {
     public Emotion currentState;
     private Animator doorAnimator;
     public bool isOpen;
-    private bool canOpen;
     private Coroutine closeCoroutine;
     public float delay = 2f;
     private void Start()
     {
         isOpen = false;
-        canOpen = true;
         doorAnimator = GetComponent<Animator>();
         UpdateDoorState();
     }
@@ -39,10 +38,12 @@ public class DoorManager : MonoBehaviour
 
     private void HandleHappyState()
     {
+        TryOpen();
     }
 
     private void HandleSadState()
     {
+        TryClose();
     }
     private void HandleAngerState()
     {
@@ -85,13 +86,11 @@ public class DoorManager : MonoBehaviour
     }
     public void OpenDoor()
     {
-        if (canOpen)
-        {
             isOpen = true;
             gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+            gameObject.GetComponent<Collider2D>().enabled = false;
             Debug.Log("门已打开");
             //动画接口
-        }
 
 
     }
@@ -124,6 +123,7 @@ public class DoorManager : MonoBehaviour
     public void CloseDoor()
     {
         isOpen = false;
+        gameObject.GetComponent<Collider2D>().enabled = true;
         gameObject.GetComponent<SpriteRenderer>().color = Color.red;
         //动画接口
     }
