@@ -27,9 +27,12 @@ public class PlaneManager : MonoBehaviour
     public UnityEvent LeavePlatform;
     public GameObject thorn;
     public Vector3 spawnOffset = Vector3.zero;
+    
+    private BindToPuzzle bindToPuzzle;
      private void Start()
-     {
-         PlaneAnimator = GetComponent<Animator>();
+    {
+        bindToPuzzle = GameObject.FindGameObjectWithTag("Player").GetComponent<BindToPuzzle>();
+        PlaneAnimator = GetComponent<Animator>();
 
         rb = GetComponent<Rigidbody2D>();
         originalPosition = transform.position;
@@ -143,16 +146,19 @@ public class PlaneManager : MonoBehaviour
                     // For both Normal and Lift states, parent the player to the platform
                     if (currentState == Emotion.Normal || currentState == Emotion.happy)
                     {
-                        collision.transform.SetParent(transform);
+                        bindToPuzzle.SetCanEnter(true);
+                        //collision.transform.SetParent(transform);
                     }
 
                     if (currentState == Emotion.sad)
                     {
+                        bindToPuzzle.SetCanEnter(false);
                         isFalling = true;
                         Invoke("StopFalling", delayBeforeFall);
                     }
                     else if (currentState == Emotion.anger)
                     {
+                        bindToPuzzle.SetCanEnter(false);
                         return;
                     }
                 }
@@ -165,11 +171,12 @@ public class PlaneManager : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             LeavePlatform?.Invoke();
-            
+
             // For both Normal and Lift states, unparent the player when they leave
             if (currentState == Emotion.Normal || currentState == Emotion.happy)
             {
-                collision.transform.SetParent(null);
+                bindToPuzzle.SetCanEnter(true);
+                //collision.transform.SetParent(null);
             }
         }
     }

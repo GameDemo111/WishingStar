@@ -7,6 +7,7 @@ public class BindToPuzzle : MonoBehaviour
     // 记录当前所在的拼图
     private Transform currentPuzzle;
     private Vector3 originalScale;   // 角色最初的世界缩放
+    private bool canEnter;
 
     private void Awake()
     {
@@ -24,24 +25,37 @@ public class BindToPuzzle : MonoBehaviour
                             1f / currentPuzzle.lossyScale.z));
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
-        if (!other.CompareTag("Puzzle")) return;
+        if (canEnter)
+        {
+            if (!other.CompareTag("Puzzle")) return;
 
-        if (currentPuzzle != null && currentPuzzle != other.transform)
-            transform.SetParent(null, true);
+            if (currentPuzzle != null && currentPuzzle != other.transform)
+                transform.SetParent(null, true);
 
-        transform.SetParent(other.transform, true);
-        currentPuzzle = other.transform;
+            transform.SetParent(other.transform, true);
+            currentPuzzle = other.transform;
+        }
+
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Puzzle") && other.transform == currentPuzzle)
+        if (canEnter)
         {
-            transform.SetParent(null, true);
-            currentPuzzle = null;
-            transform.localScale = originalScale;   // 还原
+            if (other.CompareTag("Puzzle") && other.transform == currentPuzzle)
+            {
+                transform.SetParent(null, true);
+                currentPuzzle = null;
+                transform.localScale = originalScale;   // 还原
+            }
         }
+
+    }
+
+    public void SetCanEnter(bool value)
+    {
+        canEnter = value;
     }
 }
