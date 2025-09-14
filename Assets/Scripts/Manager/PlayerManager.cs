@@ -33,16 +33,18 @@ public class PlayerManager : MonoBehaviour
     private float gravityScale;
 
     private float coyoteTimer;
+    public bool canMove;
 
     private void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
         gravityScale = rb2D.gravityScale;
+        canMove = true;
     }
 
     private void Update()
     {
-        if (!cameraManager.isGlobalView)
+        if (!cameraManager.isGlobalView || canMove)
         {
             moveInput.x = Input.GetAxisRaw("Horizontal");
             moveInput.y = Input.GetAxisRaw("Vertical");

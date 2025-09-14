@@ -14,7 +14,7 @@ public class PlaneManager : MonoBehaviour
     public Vector3 Position;
     private Animator PlaneAnimator;
     private Rigidbody2D rb;
-    private Vector3 originalPosition;
+    private Vector3 originalLocalPos;
     private int currentWaypointIndex = 0;
     public Vector3[] waypoints;
     public bool isFalling = false;
@@ -29,17 +29,18 @@ public class PlaneManager : MonoBehaviour
     public Vector3 spawnOffset = Vector3.zero;
     
     private BindToPuzzle bindToPuzzle;
+    private Coroutine moveCr; // 记录当前协程
      private void Start()
     {
         bindToPuzzle = GameObject.FindGameObjectWithTag("Player").GetComponent<BindToPuzzle>();
         PlaneAnimator = GetComponent<Animator>();
 
         rb = GetComponent<Rigidbody2D>();
-        originalPosition = transform.position;
-        if (currentState == Emotion.happy)
-        {
-            StartCoroutine(MovePlane());
-        }
+        originalLocalPos = transform.localPosition;
+        // if (currentState == Emotion.happy)
+        // {
+        //     StartCoroutine(MovePlane());
+        // }
         UpdatePlaneState();
     }
     void Update()
@@ -48,10 +49,15 @@ public class PlaneManager : MonoBehaviour
         {
             return;
         }
-        else if (currentState == Emotion.happy && isMoving)
-        {
-            return;
-        }
+        // else if (currentState == Emotion.happy && isMoving)
+        // {
+        //     return;
+        // }
+        // else if (currentState == Emotion.happy)
+        // {
+        //     StartCoroutine(MovePlane());
+        //     return;
+        // }
         else if (currentState == Emotion.sad && isFalling)
         {
             FallPlatform();
@@ -61,6 +67,37 @@ public class PlaneManager : MonoBehaviour
         {
         }
     }
+
+    private void FixedUpdate()
+    {
+        Vector2 targetLocal = Vector2.zero;
+
+        if (currentState == Emotion.Normal)
+            targetLocal = waypoints[0];
+        else if (currentState == Emotion.happy)
+            targetLocal = waypoints[currentWaypointIndex];
+        else
+            return;          // 其他状态不动
+
+        // 1. 计算这一帧要到达的局部坐标
+        Vector2 newLocal = Vector2.MoveTowards(transform.localPosition,
+                                            targetLocal,
+                                            moveSpeed * Time.fixedDeltaTime);
+
+        // 2. 转成世界坐标，让刚体去移动（带物理插值）
+        Vector2 targetWorld = transform.parent ? (Vector2)transform.parent.TransformPoint(newLocal)
+                                            : newLocal;
+
+        rb.MovePosition(targetWorld);          // ← 关键替换
+
+        // 3.  happy 状态需要循环 waypoint
+        if (currentState == Emotion.happy &&
+            Vector2.Distance(newLocal, waypoints[currentWaypointIndex]) < 0.05f)
+        {
+            currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
+        }
+    }
+
     private void UpdatePlaneState()
     {
         switch (currentState)
@@ -117,7 +154,7 @@ public class PlaneManager : MonoBehaviour
     }
     public void ResetPos()
     {
-        transform.position = originalPosition;
+        transform.position = originalLocalPos;
         currentWaypointIndex = 0;
         isFalling = false;
         rb.velocity = Vector2.zero;
@@ -130,7 +167,7 @@ public class PlaneManager : MonoBehaviour
     {
         isFalling = false;
         rb.velocity = Vector2.zero;
-        transform.position = originalPosition;
+        transform.localPosition = originalLocalPos; 
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {

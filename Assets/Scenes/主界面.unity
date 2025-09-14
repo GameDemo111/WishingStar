@@ -210,6 +210,10 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5725989355539922560, guid: 95c6594c6e5891e4ba9dce068082f852, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7277752560496792869, guid: 95c6594c6e5891e4ba9dce068082f852, type: 3}
       propertyPath: m_Name
       value: "\u8F6C\u573A"
