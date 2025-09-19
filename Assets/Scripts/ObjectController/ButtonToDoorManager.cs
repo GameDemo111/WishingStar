@@ -45,7 +45,7 @@ public class ButtonToDoorController : MonoBehaviour
 
     void Update()
     {
-        if (CanBeTouch) 
+        if (this.CanBeTouch) 
         {
             if (Input.GetKeyDown(KeyCode.E)) 
             {
@@ -121,44 +121,44 @@ public class ButtonToDoorController : MonoBehaviour
             }
         }
     }
-    public void SetState(Emotion newState)
-    {
-        if (currentState == newState) return;
-        currentState = newState;
-        UpdateButtonState();
-    }
-    private void UpdateButtonState()
-    {
-        switch (currentState)
-        {
-            case Emotion.Normal:
-                HandleNormalState();
-                break;
-            case Emotion.happy:
-                HandleHappyState();
-                break;
-            case Emotion.sad:
-                HandleSadState();
-                break;
-            case Emotion.anger:
-                HandleAngerState();
-                break;
-        }
-    }
-    private void HandleNormalState()
-    {
-    }
+    // public void SetState(Emotion newState)
+    // {
+    //     if (currentState == newState) return;
+    //     currentState = newState;
+    //     UpdateButtonState();
+    // }
+    // private void UpdateButtonState()
+    // {
+    //     switch (currentState)
+    //     {
+    //         case Emotion.Normal:
+    //             HandleNormalState();
+    //             break;
+    //         case Emotion.happy:
+    //             HandleHappyState();
+    //             break;
+    //         case Emotion.sad:
+    //             HandleSadState();
+    //             break;
+    //         case Emotion.anger:
+    //             HandleAngerState();
+    //             break;
+    //     }
+    // }
+    // private void HandleNormalState()
+    // {
+    // }
 
-    private void HandleHappyState()
-    {
-    }
+    // private void HandleHappyState()
+    // {
+    // }
 
-    private void HandleSadState()
-    {
-    }
-    private void HandleAngerState()
-    {
-    }
+    // private void HandleSadState()
+    // {
+    // }
+    // private void HandleAngerState()
+    // {
+    // }
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))

@@ -44,7 +44,7 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
-        if (!cameraManager.isGlobalView || canMove)
+        if (!cameraManager.isGlobalView && canMove)
         {
             moveInput.x = Input.GetAxisRaw("Horizontal");
             moveInput.y = Input.GetAxisRaw("Vertical");

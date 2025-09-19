@@ -12,25 +12,43 @@ public class ButtonToPlaneManager : MonoBehaviour
 
     private void Start()
     {
-        canBeTouch = true;
+
     }
 
     void Update()
     {
-        if (canBeTouch) 
+        if (canBeTouch)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
                 if (targetObject.currentState == PlaneManager.Emotion.Normal)
                 {
-                    targetObject.currentState = PlaneManager.Emotion.happy;
+                    targetObject.SetState(PlaneManager.Emotion.happy);
+                    //targetObject.currentState = PlaneManager.Emotion.happy;
                 }
                 else
                 {
-                    targetObject.currentState = PlaneManager.Emotion.Normal;
+                    targetObject.SetState(PlaneManager.Emotion.Normal);
+                    //targetObject.currentState = PlaneManager.Emotion.Normal;
                 }
-                    
+
             }
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            canBeTouch = true;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            canBeTouch = false;
         }
     }
 }
