@@ -34,6 +34,8 @@ public class PlayerManager : MonoBehaviour
 
     private float coyoteTimer;
     public bool canMove;
+    protected bool isDead = false;
+    protected Transform RespawnPos;
 
     private void Start()
     {
@@ -136,8 +138,8 @@ public class PlayerManager : MonoBehaviour
             rb2D.velocity = new Vector2(rb2D.velocity.x, 0);
             rb2D.AddForce(Vector2.up * climbSpeed, ForceMode2D.Force);
         }
-        
-        
+
+
     }
     #endregion
     #region 地面检测
@@ -150,6 +152,60 @@ public class PlayerManager : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube((Vector2)transform.position + groundBoxOffset, groundBoxSize);
         Gizmos.color = Color.red;
+    }
+    private System.Collections.IEnumerator RespawnCoroutine()
+    {
+        if (RespawnPos == null)
+        {
+            Debug.LogWarning("No respawn position set! Please add SetRespawnPos trigger at starting point!");
+            isDead = false; // 重置死亡状态避免卡住
+            yield break;
+        }
+
+        Debug.Log($"Respawning at position: {RespawnPos.position}");
+
+        // 停止所有物理运动
+        rb2D.velocity = Vector2.zero;
+        rb2D.angularVelocity = 0f;
+
+        // 暂时禁用物理模拟
+        rb2D.simulated = false;
+
+        // 等待一帧确保物理系统停止
+        yield return null;
+
+        // 强制设置位置
+        transform.position = RespawnPos.position;
+        rb2D.position = RespawnPos.position;
+
+        // 重新启用物理模拟
+        rb2D.simulated = true;
+
+        // 重置状态
+        isDead = false;
+
+        Debug.Log($"Respawn completed. Current position: {transform.position}");
+    }
+
+    protected void Respawn()
+    {
+        // 这个方法现在被RespawnCoroutine替代，保留作为备用
+        StartCoroutine(RespawnCoroutine());
+    }
+    public void SetRespawnPos(Transform pos)
+    {
+        RespawnPos = pos; // 直接赋值Transform引用，而不是尝试访问null的position
+        Debug.Log($"Respawn position set to: {pos.position}"); // 调试信息
+    }
+    public void Dead()
+    {
+        if (isDead) return;
+        else
+        {
+            isDead = true;
+            Debug.Log("Character died! Attempting respawn..."); // 调试信息
+            StartCoroutine(RespawnCoroutine());
+        }
     }
     #endregion
 
