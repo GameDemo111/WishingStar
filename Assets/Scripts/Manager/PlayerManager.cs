@@ -31,6 +31,7 @@ public class PlayerManager : MonoBehaviour
     private Vector2 moveInput;
     private Rigidbody2D rb2D;
     private float gravityScale;
+    private Animator animator;
 
     private float coyoteTimer;
     public bool canMove;
@@ -39,6 +40,7 @@ public class PlayerManager : MonoBehaviour
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
         rb2D = GetComponent<Rigidbody2D>();
         gravityScale = rb2D.gravityScale;
         canMove = true;
@@ -64,7 +66,6 @@ public class PlayerManager : MonoBehaviour
 
             if (CheckGround())
             {
-
             }
             else
             {
@@ -118,6 +119,8 @@ public class PlayerManager : MonoBehaviour
         }
         float speedDif = targetSpeed - rb2D.velocity.x;
         rb2D.velocity += new Vector2(speedDif * acceleration * Time.fixedDeltaTime, 0);
+
+        animator.SetBool("isMove", Mathf.Abs(moveInput.x) > 0.01f);
     }
 
     #endregion
@@ -126,6 +129,13 @@ public class PlayerManager : MonoBehaviour
     {
         rb2D.velocity = new Vector2(rb2D.velocity.x, 0);
         rb2D.velocity += Vector2.up * jumpForce;
+        animator.SetBool("isJump", true);
+        StartCoroutine(BackToNormal());
+    }
+    private IEnumerator BackToNormal()
+    {
+        yield return new WaitForSeconds(1f);
+        animator.SetBool("isJump", false);
     }
 
     #endregion

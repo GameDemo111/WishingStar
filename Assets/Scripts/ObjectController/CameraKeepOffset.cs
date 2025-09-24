@@ -7,30 +7,34 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class CameraKeepOffset : MonoBehaviour
 {
+    [Tooltip("目标角色")]
+    public Transform target; // 拖拽角色到这里
+
     [Tooltip("是否也锁定旋转")]
     public bool lockRotation = true;
 
-    private Vector3 initLocalPos;
-    private Quaternion initLocalRot;
+    private Vector3 offset;
+    private Quaternion initRot;
+
     public bool isLock = false;
 
-    private void Awake()
+    void Start()
     {
         isLock = true;
-        // 记录一开始相对于父物体（角色）的局部坐标
-        initLocalPos = transform.localPosition;
-        initLocalRot = transform.localRotation;
+        // 记录初始偏移（世界坐标）
+        offset = transform.position - target.position;
+        initRot = transform.rotation;
     }
 
     private void LateUpdate()
     {
         if (isLock)
         {
-            // 每帧把局部坐标写死，父级无论如何运动相机都纹丝不动
-            transform.localPosition = initLocalPos;
+            transform.position = target.position + offset;
             if (lockRotation)
-                transform.localRotation = initLocalRot;
+            {
+                transform.rotation = initRot;
+            }
         }
-        
     }
 }

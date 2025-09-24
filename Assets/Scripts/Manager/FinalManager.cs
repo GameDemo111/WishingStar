@@ -17,11 +17,11 @@ public class FinalManager : MonoBehaviour
     {
         if (current != target)
         {
-            final.GetComponent<SpriteRenderer>().color = Color.red;
+            
         }
         else
         {
-            final.GetComponent<SpriteRenderer>().color = Color.green;
+            
             Debug.Log("终点已打开");
             if (isEnter)
             {
