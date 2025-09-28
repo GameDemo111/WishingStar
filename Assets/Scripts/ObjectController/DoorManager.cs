@@ -8,11 +8,15 @@ public class DoorManager : MonoBehaviour
     public bool isOpen;
     private Coroutine closeCoroutine;
     public float delay = 2f;
+    public SpriteRenderer doorCloseSprite;
+    public SpriteRenderer doorOpenSprite;
     private void Start()
     {
         isOpen = false;
         doorAnimator = GetComponent<Animator>();
         UpdateDoorState();
+        if (doorCloseSprite == null) return;
+        if (doorOpenSprite == null) return;
     }
     private void UpdateDoorState()
     {
@@ -87,7 +91,7 @@ public class DoorManager : MonoBehaviour
     public void OpenDoor()
     {
             isOpen = true;
-            gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+            gameObject.GetComponent<SpriteRenderer>().sprite = doorOpenSprite.sprite;
             gameObject.GetComponent<Collider2D>().enabled = false;
             Debug.Log("门已打开");
             //动画接口
@@ -124,7 +128,7 @@ public class DoorManager : MonoBehaviour
     {
         isOpen = false;
         gameObject.GetComponent<Collider2D>().enabled = true;
-        gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+        gameObject.GetComponent<SpriteRenderer>().sprite = doorCloseSprite.sprite;
         //动画接口
     }
 

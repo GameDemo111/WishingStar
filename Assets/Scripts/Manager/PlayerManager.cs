@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -40,6 +41,7 @@ public class PlayerManager : MonoBehaviour
 
     private void Start()
     {
+        
         animator = GetComponent<Animator>();
         rb2D = GetComponent<Rigidbody2D>();
         gravityScale = rb2D.gravityScale;
@@ -53,13 +55,17 @@ public class PlayerManager : MonoBehaviour
             moveInput.x = Input.GetAxisRaw("Horizontal");
             moveInput.y = Input.GetAxisRaw("Vertical");
 
-            if (moveInput.x < 0)
+            if (moveInput.x > 0)
             {
-                transform.localScale = new Vector3(-1, 1, 1);
+                transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x),
+                                             transform.localScale.y,
+                                             transform.localScale.z);
             }
-            else if (moveInput.x > 0)
+            else if (moveInput.x < 0)
             {
-                transform.localScale = new Vector3(1, 1, 1);
+                transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x),
+                                             transform.localScale.y,
+                                             transform.localScale.z);
             }
             Run();
 

@@ -18,11 +18,15 @@ public class BindToPuzzle : MonoBehaviour
     {
         // 如果已经挂在某拼图下，强制保持原始大小
         if (currentPuzzle != null)
-            transform.localScale = Vector3.Scale(
-                originalScale,
-                new Vector3(1f / currentPuzzle.lossyScale.x,
-                            1f / currentPuzzle.lossyScale.y,
-                            1f / currentPuzzle.lossyScale.z));
+        {
+            Vector3 scale = transform.localScale;
+            float sign = Mathf.Sign(scale.x);          // 记录朝向符号
+            Vector3 parentScale = currentPuzzle.lossyScale;
+            scale.x = sign * originalScale.x / parentScale.x;
+            scale.y = originalScale.y / parentScale.y;
+            scale.z = originalScale.z / parentScale.z;
+            transform.localScale = scale;
+        }
     }
 
     private void OnTriggerStay2D(Collider2D other)

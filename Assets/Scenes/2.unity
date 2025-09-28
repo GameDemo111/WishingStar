@@ -1064,6 +1064,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1931727542314344931, guid: abe56d9ab196db74ca1b7267e74b0d38, type: 3}
   m_PrefabInstance: {fileID: 5096511673806544770}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &642145129 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2887373950740608898, guid: 45aae1acbf77ee94995c9f0f921e5ee5, type: 3}
+  m_PrefabInstance: {fileID: 2195457609574568318}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &650739964
 GameObject:
   m_ObjectHideFlags: 0
@@ -1715,6 +1720,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &968050013 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5537998228747894605, guid: abe56d9ab196db74ca1b7267e74b0d38, type: 3}
+  m_PrefabInstance: {fileID: 5096511673806544770}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa85e4764d7051d4c88201b1684b99ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &975534491
 GameObject:
   m_ObjectHideFlags: 0
@@ -1968,6 +1984,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5432379866560990599, guid: 45aae1acbf77ee94995c9f0f921e5ee5, type: 3}
   m_PrefabInstance: {fileID: 2195457609574568318}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1013365419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642145129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 849d745169fa5f147884fa4441f82b19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetObject: {fileID: 968050013}
+  currentState: 0
+  autoCloseDelay: 5
+  _isOpen: 0
+  CanBeTouch: 0
+  ButtonOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  ButtonClose:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1029814778
 GameObject:
   m_ObjectHideFlags: 0
@@ -4007,7 +4046,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2887373950740608898, guid: 45aae1acbf77ee94995c9f0f921e5ee5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1013365419}
   m_SourcePrefab: {fileID: 100100000, guid: 45aae1acbf77ee94995c9f0f921e5ee5, type: 3}
 --- !u!1001 &5096511673806544770
 PrefabInstance:
@@ -4057,6 +4099,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3784749156280024732, guid: abe56d9ab196db74ca1b7267e74b0d38, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d8e4db4281afcff48ae94ebd67fd3a61, type: 3}
+    - target: {fileID: 5537998228747894605, guid: abe56d9ab196db74ca1b7267e74b0d38, type: 3}
+      propertyPath: doorOpenSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 1157ccb824c01714dbc42e0f389b3b9d, type: 3}
+    - target: {fileID: 5537998228747894605, guid: abe56d9ab196db74ca1b7267e74b0d38, type: 3}
+      propertyPath: doorCloseSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d8e4db4281afcff48ae94ebd67fd3a61, type: 3}
     - target: {fileID: 8478445929973902558, guid: abe56d9ab196db74ca1b7267e74b0d38, type: 3}
       propertyPath: m_Name
       value: "\u95E8"
